@@ -21,3 +21,10 @@ export interface TickersProps {
   tickers: Record<string, TickerData>;
 }
 
+export interface SortCellProps {
+  label: string;
+  fieldName: keyof TickerData;
+  sortDirection: SortDirection;
+  onSort: (fieldName: keyof TickerData, sortDirection: SortDirection) => void;
+}
+

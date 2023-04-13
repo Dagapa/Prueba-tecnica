@@ -1,36 +1,42 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { TickerData } from "types";
 
-export const useTickers = () => {
+type TickersHookResult = {
+  tickers: TickerData[];
+  isLoaded: boolean;
+  error: Error | null;
+};
+
+const fetchTickersData = async (): Promise<TickerData[]> => {
+  const response = await fetch("https://api.wazirx.com/sapi/v1/tickers/24hr");
+  return response.json();
+};
+
+export const useTickers = (intervalMs = 5000): TickersHookResult => {
   const [tickers, setTickers] = useState<TickerData[]>([]);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
+  const [error, setError] = useState<Error | null>(null);
 
-  async function getTickers() {
+  const fetchTickers = useCallback(async () => {
     try {
-      const response = await fetch(
-        "https://api.wazirx.com/sapi/v1/tickers/24hr"
-      );
-      const data = await response.json();
-      return data;
+      const data = await fetchTickersData();
+      setTickers(data);
+      setIsLoaded(true);
+      setError(null);
     } catch (error) {
-      console.log("Ocurrió un error al obtener los tickers: ", error);
+      setError(error as Error);
     }
-  }
+  }, []);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (!tickers.length) {
-        getTickers()
-          .then((response) => {
-            setTickers(response);
-            setIsLoaded(true);
-          })
-          .catch((error) => console.log(error));
+    const intervalId = setInterval(() => {
+      if (!isLoaded) {
+        fetchTickers().catch((error) => setError(error));
       }
-    }, 5000);
+    }, intervalMs);
+    return () => clearInterval(intervalId);
+  }, [fetchTickers, intervalMs, isLoaded]);
 
-    return () => clearInterval(interval);
-  }, [isLoaded]);
 
-  return tickers;
+  return { tickers, isLoaded, error };
 };
