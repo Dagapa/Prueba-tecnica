@@ -1,0 +1,30 @@
+.table {
+  border-collapse: collapse;
+}
+
+.table th {
+  padding: 8px;
+  text-align: center;
+  border-bottom: 1px solid transparent;
+}
+
+.table td {
+  padding: 8px;
+  text-align: center;
+  border-bottom: 1px solid transparent;
+}
+
+/* th,
+td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+} */
+
+.odd-row {
+  background-color: rgb(54, 54, 54);
+}
+
+.row-even {
+  background-color: #818181;
+}
