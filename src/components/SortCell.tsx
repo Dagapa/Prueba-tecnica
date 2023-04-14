@@ -13,7 +13,7 @@ export const SortCell: React.FC<SortCellProps> = ({
   };
 
   return (
-    <th onClick={handleClick}>
+    <th onClick={handleClick} className={styles.tHead}>
       {label}
       <span className={styles.sort}>
         {sortDirection === "asc" ? " ▲" : " ▼"}

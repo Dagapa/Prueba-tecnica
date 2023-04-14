@@ -1,27 +1,23 @@
 import Link from "next/link";
-import { FormEvent, useState } from "react";
+import { FormEvent, useCallback, useState } from "react";
 import { LoginData } from "types";
 import styles from "@/styles/login.module.css";
-
-const verifyLogin = (data: LoginData): boolean => {
-  return data.email === "grupoASD@gmail.com" && data.password === "Rjs2022*";
-};
+import { verifyLogin } from "@/utils/verifyLogin";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [valid, setValid] = useState(false);
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data: LoginData = { email, password };
-    console.log(data);
-    if (verifyLogin(data)) {
-      setValid(true);
-    } else {
-      setValid(false);
-    }
-  };
+  const handleSubmit = useCallback(
+    (event: FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+      const data: LoginData = { email, password };
+      const isValid = verifyLogin(data);
+      setValid(isValid);
+    },
+    [email, password]
+  );
 
   return (
     <div>
@@ -48,7 +44,7 @@ export default function Login() {
         />
         <button type="submit">Login</button>
       </form>
-      {valid && (
+      {valid ? (
         <p>
           ¡Formulario válido!
           <Link href="/table">
@@ -57,8 +53,9 @@ export default function Login() {
             </span>
           </Link>
         </p>
+      ) : (
+        <p>¡Formulario inválido!</p>
       )}
-      {!valid && <p>¡Formulario inválido!</p>}
     </div>
   );
 }

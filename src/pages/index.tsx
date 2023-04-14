@@ -1,11 +1,12 @@
 import Link from "next/link";
+import styles from "@/styles/main.module.css";
 
 const Home = () => {
   return (
-    <div>
+    <div className={styles.container}>
       <h1>Bienvenido a la página principal.</h1>
       <Link href="/login">
-        <button>Iniciar sesión</button>
+        <button className={styles.logIn}>Iniciar sesión</button>
       </Link>
     </div>
   );

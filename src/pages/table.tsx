@@ -1,17 +1,21 @@
+import { useEffect, useState } from "react";
 import { TickerData } from "types";
-import styles from "@/styles/table.module.css";
 import { useTickers } from "@/hooks/useTickers";
-import { useState } from "react";
 import { SortCell } from "@/components/SortCell";
+import { formatDate } from "@/utils/dateUtils";
+import styles from "@/styles/table.module.css";
 
 type SortDirection = "asc" | "desc";
 
-export const Table: React.FC = () => {
-  const { tickers, isLoaded, error } = useTickers();
-  const [sortField, setSortField] = useState<keyof TickerData>("symbol");
-  const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
+const DEFAULT_SORT_FIELD = "symbol";
+const DEFAULT_SORT_DIRECTION: SortDirection = "asc";
 
-  const tickersData = tickers.sort((a, b) => {
+const sortTickers = (
+  tickers: TickerData[],
+  sortField: keyof TickerData,
+  sortDirection: SortDirection
+): TickerData[] => {
+  const sortedTickers = tickers.sort((a, b) => {
     const aValue = a[sortField];
     const bValue = b[sortField];
 
@@ -26,14 +30,23 @@ export const Table: React.FC = () => {
     }
   });
 
-  const formatDate = (at: number) => {
-    const date = new Date(at);
-    const day = date.getDay().toString().padStart(2, "0");
-    const month = (date.getMonth() + 1).toString().padStart(2, "0");
-    const year = date.getFullYear().toString();
-    const formattedDate = `${day}/${month}/${year}`;
-    return formattedDate;
-  };
+  return sortedTickers;
+};
+
+const Table: React.FC = () => {
+  const { tickers, isLoaded, error } = useTickers();
+  const [sortField, setSortField] =
+    useState<keyof TickerData>(DEFAULT_SORT_FIELD);
+  const [sortDirection, setSortDirection] = useState<SortDirection>(
+    DEFAULT_SORT_DIRECTION
+  );
+  const [tickersData, setTickersData] = useState<TickerData[]>([]);
+
+  useEffect(() => {
+    if (isLoaded) {
+      setTickersData(sortTickers(tickers, sortField, sortDirection));
+    }
+  }, [isLoaded, tickers, sortField, sortDirection]);
 
   const handleSort = (
     fieldName: keyof TickerData,
