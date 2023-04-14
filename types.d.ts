@@ -28,3 +28,6 @@ export interface SortCellProps {
   onSort: (fieldName: keyof TickerData, sortDirection: SortDirection) => void;
 }
 
+export type SortDirection = "asc" | "desc";
+
+
