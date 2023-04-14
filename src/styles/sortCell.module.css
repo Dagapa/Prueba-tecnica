@@ -1,3 +1,8 @@
+.tHead {
+  border-collapse: collapse;
+  background-color: #00113a;
+}
+
 .sort {
   cursor: pointer;
   display: flex;

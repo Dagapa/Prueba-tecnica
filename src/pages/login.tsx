@@ -23,19 +23,17 @@ export default function Login() {
   return (
     <div className={styles["form-container"]}>
       {valid ? (
-        <p>
-          ¡Formulario válido!
+        <div className={styles.success}>
+          <h3>¡Inicio de sesión exitoso!</h3>
           <Link href="/table">
-            <span style={{ color: "gray", textDecoration: "underline" }}>
-              Ir a Home
-            </span>
+            <button className={styles["success-button"]}>Ver los datos</button>
           </Link>
-        </p>
+        </div>
       ) : (
         <RequiredLogin />
       )}
       <form onSubmit={handleSubmit} className={styles.form}>
-        <h2>LogIn</h2>
+        <h2>Iniciar sesión</h2>
         <input
           type="email"
           placeholder="email"

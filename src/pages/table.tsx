@@ -4,6 +4,7 @@ import { useTickers } from "@/hooks/useTickers";
 import { SortCell } from "@/components/SortCell";
 import { formatDate } from "@/utils/dateUtils";
 import styles from "@/styles/table.module.css";
+import { Skeleton } from "@/components/Skeleton";
 
 type SortDirection = "asc" | "desc";
 
@@ -61,7 +62,7 @@ const Table: React.FC = () => {
   }
 
   if (!isLoaded) {
-    return <div>Loading...</div>;
+    return <Skeleton />;
   }
 
   return (
