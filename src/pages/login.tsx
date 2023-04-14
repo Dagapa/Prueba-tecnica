@@ -9,13 +9,27 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [valid, setValid] = useState(false);
+  const [error, setError] = useState("");
+
+  const isValidEmail = (email: string): boolean => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
 
   const handleSubmit = useCallback(
-    (event: FormEvent<HTMLFormElement>) => {
+    (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
       const data: LoginData = { email, password };
-      const isValid = verifyLogin(data);
-      setValid(isValid);
+      if (isValidEmail(email)) {
+        const isValid = verifyLogin(data);
+        setValid(isValid);
+        if (!isValid) {
+          setError(
+            "Las credenciales son incorrectas. Por favor, intenta nuevamente."
+          );
+        }
+      } else {
+        setError("Email invalido");
+      }
     },
     [email, password]
   );
@@ -55,6 +69,7 @@ export default function Login() {
           name="password"
         />
         <button type="submit">Login</button>
+        {error && <p className={styles.error}>{error}</p>}
       </form>
     </div>
   );
