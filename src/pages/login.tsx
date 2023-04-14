@@ -3,6 +3,7 @@ import { FormEvent, useCallback, useState } from "react";
 import { LoginData } from "types";
 import styles from "@/styles/login.module.css";
 import { verifyLogin } from "@/utils/verifyLogin";
+import { RequiredLogin } from "@/components/RequiredLogin";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -20,8 +21,21 @@ export default function Login() {
   );
 
   return (
-    <div>
+    <div className={styles["form-container"]}>
+      {valid ? (
+        <p>
+          ¡Formulario válido!
+          <Link href="/table">
+            <span style={{ color: "gray", textDecoration: "underline" }}>
+              Ir a Home
+            </span>
+          </Link>
+        </p>
+      ) : (
+        <RequiredLogin />
+      )}
       <form onSubmit={handleSubmit} className={styles.form}>
+        <h2>LogIn</h2>
         <input
           type="email"
           placeholder="email"
@@ -44,18 +58,6 @@ export default function Login() {
         />
         <button type="submit">Login</button>
       </form>
-      {valid ? (
-        <p>
-          ¡Formulario válido!
-          <Link href="/table">
-            <span style={{ color: "gray", textDecoration: "underline" }}>
-              Ir a Home
-            </span>
-          </Link>
-        </p>
-      ) : (
-        <p>¡Formulario inválido!</p>
-      )}
     </div>
   );
 }
