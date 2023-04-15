@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { FormEvent, useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import { LoginData } from "types";
 import styles from "@/styles/login.module.css";
 import { verifyLogin } from "@/utils/verifyLogin";
