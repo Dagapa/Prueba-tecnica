@@ -16,7 +16,18 @@ export const SortCell: React.FC<SortCellProps> = ({
     <th onClick={handleClick} className={styles.tHead}>
       {label}
       <span className={styles.sort}>
-        {sortDirection === "asc" ? " ▲" : " ▼"}
+        <button
+          onClick={() => onSort(fieldName, "asc")}
+          disabled={sortDirection === "asc"}
+        >
+          ▲
+        </button>
+        <button
+          onClick={() => onSort(fieldName, "desc")}
+          disabled={sortDirection === "desc"}
+        >
+          ▼
+        </button>
       </span>
     </th>
   );
