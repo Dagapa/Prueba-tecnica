@@ -22,6 +22,7 @@ export default function Login() {
       if (isValidEmail(email)) {
         const isValid = verifyLogin(data);
         setValid(isValid);
+        setError("");
         if (!isValid) {
           setError(
             "Las credenciales son incorrectas. Por favor, intenta nuevamente."
