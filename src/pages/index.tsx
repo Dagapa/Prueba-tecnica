@@ -1,6 +1,5 @@
 import Link from "next/link";
 import styles from "@/styles/main.module.css";
-import { Skeleton } from "@/components/Skeleton";
 
 const Home = () => {
   return (

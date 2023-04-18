@@ -12,7 +12,7 @@ const fetchTickersData = async (): Promise<TickerData[]> => {
   return response.json();
 };
 
-export const useTickers = (intervalMs = 5000): TickersHookResult => {
+export const useTickers = (intervalMs = 2000): TickersHookResult => {
   const [tickers, setTickers] = useState<TickerData[]>([]);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [error, setError] = useState<Error | null>(null);

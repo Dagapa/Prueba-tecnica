@@ -33,15 +33,11 @@ const Table: React.FC = () => {
     []
   );
 
-  if (error) {
-    return <div>{error.message}</div>;
-  }
-
   return (
-    <>
-      {!isLoaded ? (
-        <Skeleton />
-      ) : (
+    <div>
+      {error && <div>{error.message}</div>}
+      {!error && !isLoaded && <Skeleton />}
+      {!error && isLoaded && (
         <table className={styles.table}>
           <thead>
             <tr>
@@ -109,7 +105,7 @@ const Table: React.FC = () => {
           </tbody>
         </table>
       )}
-    </>
+    </div>
   );
 };
 
