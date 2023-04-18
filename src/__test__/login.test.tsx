@@ -6,7 +6,7 @@ const validEmail = "grupoASD@gmail.com";
 const validPassword = "Rjs2022*";
 
 describe("Login component", () => {
-  it("debería mostrar un mensaje de éxito si las credenciales son correctas", () => {
+  it("valida si las credenciales son correctas", () => {
     render(<Login />);
 
     // Simular que se ingresa un email y contraseña válidos y correctos
